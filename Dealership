@@ -1,0 +1,64 @@
+using System;
+using System.Collections.Generic;
+
+// Define a class for a vehicle
+class Vehicle
+{
+    public string Make { get; set; }
+    public string Model { get; set; }
+    public int Year { get; set; }
+    public decimal Price { get; set; }
+}
+
+// Define a class for a car dealership
+class CarDealership
+{
+    // Create a list to store vehicles
+    public List<Vehicle> Vehicles = new List<Vehicle>();
+
+    // Method to add a vehicle to the list
+    public void AddVehicle(string make, string model, int year, decimal price)
+    {
+        var vehicle = new Vehicle
+        {
+            Make = make,
+            Model = model,
+            Year = year,
+            Price = price
+        };
+        Vehicles.Add(vehicle);
+    }
+
+    // Method to sell a vehicle
+    public void SellVehicle(string make, string model, int year)
+    {
+        // Find the vehicle in the list
+        foreach (var vehicle in Vehicles)
+        {
+            if (vehicle.Make == make && vehicle.Model == model && vehicle.Year == year)
+            {
+                // Remove the vehicle from the list
+                Vehicles.Remove(vehicle);
+                Console.WriteLine($"Successfully sold the {make} {model} {year} for {vehicle.Price:C}");
+                return;
+            }
+        }
+
+        // If the vehicle was not found, print an error message
+        Console.WriteLine("Sorry, we could not find the specified vehicle.");
+    }
+}
+
+// Create an instance of the CarDealership class
+var dealership = new CarDealership();
+
+// Add some vehicles to the dealership's inventory
+dealership.AddVehicle("Ford", "Mustang", 2020, 40000);
+dealership.AddVehicle("Toyota", "Corolla", 2019, 20000);
+dealership.AddVehicle("Honda", "Accord", 2018, 30000);
+
+// Sell a vehicle
+dealership.SellVehicle("Ford", "Mustang", 2020);
+
+// Try to sell a vehicle that is not in the inventory
+dealership.SellVehicle("Ford", "Fiesta", 2020);
